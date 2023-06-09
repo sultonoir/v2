@@ -1,16 +1,25 @@
-import type { WebhookEvent } from "@clerk/clerk-sdk-node";
+import { Response } from "express";
+import { WebhookEvent } from "@clerk/clerk-sdk-node";
 import { prisma } from "@/lib/prisma";
 
-export const POST = async (req: any) => {
-  const evt = req.body.evt as WebhookEvent;
+const handler = async (req: Request, res: Response) => {
+  const body = await req.json();
+  const evt = body.evt as WebhookEvent;
   switch (evt.type) {
     case "user.created":
-      const user = await prisma.user.create({
+      await prisma.user.create({
         data: {
-          email: evt.data.email_addresses[0]?.email_address,
           username: evt.data.username,
+          email: evt.data.email_addresses[0].email_address,
           name: evt.data.first_name,
         },
       });
+      // Lakukan sesuatu dengan firstName
+      break;
+    default:
+      // Penanganan lainnya jika diperlukan
+      break;
   }
+
+  res.sendStatus(200); // Mengirim status 200 sebagai respons
 };
