@@ -2,7 +2,7 @@ import { Response } from "express";
 import { WebhookEvent } from "@clerk/clerk-sdk-node";
 import { prisma } from "@/lib/prisma";
 
-const handler = async (req: Request, res: Response) => {
+export const POST = async (req: Request, res: Response) => {
   const body = await req.json();
   const evt = body.evt as WebhookEvent;
   switch (evt.type) {
