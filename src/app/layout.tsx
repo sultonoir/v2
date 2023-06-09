@@ -1,9 +1,5 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
 import { TrpcProvider } from "@/utils/trpc-provider";
 import { ClerkProvider } from "@clerk/nextjs";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",

@@ -1,28 +1,21 @@
 "use client";
-
-import { trpc } from "@/utils/trpc";
-import Image from "next/image";
+import { User } from "@clerk/nextjs/dist/types/server";
 import React from "react";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
-export default function ListUsers() {
-  let { data: users, isLoading, isFetching } = trpc.posts.getAll.useQuery();
+interface ListUsersProps {
+  user: User | null;
+}
 
-  if (isLoading || isFetching) {
-    return <p>Loading...</p>;
-  }
-
+const ListUsers = () => {
+  const { user } = useUser();
   return (
-    <div className="grid">
-      <p className="text-red-400">hallo</p>
-      {users?.map((user: any) => (
-        <div
-          className="border border-slate-600"
-          key={user.id}
-        >
-          <h1>{user.email}</h1>
-          <h3>{user.name}</h3>
-        </div>
-      ))}
+    <div>
+      {user?.firstName}
+      {!user && <SignInButton />}
+      {!!user && <SignOutButton />}
     </div>
   );
-}
+};
+
+export default ListUsers;

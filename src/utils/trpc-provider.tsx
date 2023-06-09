@@ -42,11 +42,11 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
     })
   );
   return (
-    <trpc.Provider
-      client={trpcClient}
-      queryClient={queryClient}
-    >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </trpc.Provider>
   );
 };
